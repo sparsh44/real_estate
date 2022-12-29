@@ -23,20 +23,13 @@ function App() {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(res => {
-      // setPrice(res.estimated_price)
-      console.log("Request complete! response:", res.json());
+    } , {mode: 'cors'})
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      setPrice(data.estimated_price)
     });
 
-    // post(url, {
-    //   total_sqft : parseFloat(area),
-    //   bhk : bhk,
-    //   bath: bath,
-    //   location:location
-    // },function(data, status){
-    //   console.log(data.estimated_price)
-    //   setPrice(data.estimated_price)
-    // } )
   }
 
   return (
@@ -77,7 +70,7 @@ function App() {
           </div>
           
         </form>
-        <button className="inline-flex items-center justify-center h-full px-2 text-gray-600 border-l border-white-50 hover:text-gray-700 rounded-r-md hover:bg-gray-50"  value="Submit" onClick={()=>{getEstimatedPrice()}}/>
+        <button className="Button" name='Submit' value="Submit" onClick={()=>{getEstimatedPrice()}}/>
         <div><label>
           Estimated Price - {price}
         </label>

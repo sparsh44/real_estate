@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import util
 from flask_cors import CORS,cross_origin
+import json
 
 app = Flask(__name__)
 
@@ -21,16 +22,23 @@ def get_location_names():
 def predict_home_price():
     print(request.json)
 
-    total_sqft = float(request.json['total_sqft'])
-    location = request.json['location']
-    bath = int(request.json['bath'])
-    bhk = int(request.json['bhk'])
+    total_sqft = request.json['total_sqft']
+    location = str(request.json['location'])
+    bath = request.json['bath']
+    bhk = request.json['bhk']
+
+    print(total_sqft)
+    print(location)
+    print(bath)
+    print(bhk)
+    
     response = jsonify({
         'estimated_price': util.get_estimated_price(location, total_sqft, bath, bhk)
     })
-    print(response)
+    print(str(util.get_estimated_price(location, total_sqft, bath, bhk)))
+    print(json.loads(response.get_data().decode("utf-8")))
     response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return json.loads(response.get_data().decode("utf-8"))
     
     
 
